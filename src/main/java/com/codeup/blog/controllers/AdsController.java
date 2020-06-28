@@ -1,29 +1,40 @@
 package com.codeup.blog.controllers;
 
 
+import com.codeup.blog.models.Ad;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AdsController {
 
     @GetMapping("/ads")
     //@RequestMapping(value = "/ads", method = RequestMethod.GET)
-    @ResponseBody
-    public String index(){   //show list of ads = index of things
-        return "ads index page";
+    public String index(Model model){   //show list of ads = index of things
+        ArrayList<Ad> adsList = new ArrayList<>();
+        adsList.add(new Ad("PS1", "Used"));
+        adsList.add(new Ad("PS2", "Used"));
+        adsList.add(new Ad("PS4", "Used"));
+        adsList.add(new Ad("SNES", "Used"));
+        model.addAttribute("noAdsFound", adsList.size() == 0);
+        model.addAttribute("ads", adsList);
+        return "ads/index";
     }
 
     @GetMapping("/ads/{id}")
     @ResponseBody
     public String showAd(@PathVariable long id) {
-        return "show ad id: " + id;
+        return "view an individual ad with the id of: " + id;
     }
 
-    @PostMapping("/ads/create")
+    @GetMapping("/ads/create")
     @ResponseBody
     public String showForm(){
-        return "View the form for creating an ad";
+        return "view the form for creating an ad";
     }
 
     @PostMapping("/ads/create")
