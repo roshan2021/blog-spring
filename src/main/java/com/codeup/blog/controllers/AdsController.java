@@ -26,9 +26,10 @@ public class AdsController {
     }
 
     @GetMapping("/ads/{id}")
-    @ResponseBody
-    public String showAd(@PathVariable long id) {
-        return "view an individual ad with the id of: " + id;
+    public String showAd(@PathVariable long id, Model model) {
+        model.addAttribute("adId", id);
+        model.addAttribute("ad", new Ad("PS1", "Used"));
+        return "/ads/show";
     }
 
     @GetMapping("/ads/create")
