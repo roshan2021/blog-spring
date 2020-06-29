@@ -18,6 +18,11 @@ public class Ad {
     @Column(nullable = false)
     private String description;
 
+
+
+    private User owner;
+
+
     //Spring Framework uses this empty constructor
     public Ad() {
     }

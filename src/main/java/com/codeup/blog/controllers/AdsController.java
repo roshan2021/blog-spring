@@ -1,5 +1,9 @@
 package com.codeup.blog.controllers;
 
+
+
+
+
 import com.codeup.blog.daos.AdsRepository;
 import com.codeup.blog.models.Ad;
 import org.springframework.stereotype.Controller;
@@ -23,14 +27,16 @@ public class AdsController {
 //    @RequestMapping(value = "/ads", method = RequestMethod.GET)
     public String index(Model model){
 
-        Ad firstAd = adsDao.findFirstByTitle("psvita");
-        System.out.println("firstAd.getId() = " + firstAd.getId());
+//        Ad firstAd = adsDao.findFirstByTitle("psvita");
+//        System.out.println("firstAd.getId() = " + firstAd.getId());
 
         List<Ad> adsList = adsDao.findAll();
         model.addAttribute("noAdsFound", adsList.size() == 0);
         model.addAttribute("ads", adsList);
         return "ads/index";
     }
+
+
 
     @GetMapping("/ads/{id}")
     public String show(@PathVariable long id, Model model){
