@@ -20,6 +20,8 @@ public class Ad {
 
 
 
+
+    @OneToOne
     private User owner;
 
 
@@ -28,16 +30,18 @@ public class Ad {
     }
 
     //insert Ad
-    public Ad(String title, String description) {
+    public Ad(String title, String description, User user) {
         this.title = title;
         this.description = description;
+        this.owner = user;
     }
 
     //read Ad
-    public Ad(long id, String title, String description) {
+    public Ad(long id, String title, String description, User user) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.owner = user;
     }
 
     public String getTitle() {
@@ -62,5 +66,13 @@ public class Ad {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
