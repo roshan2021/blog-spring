@@ -56,7 +56,7 @@ public class AdsController {
     public String save()
     {
         User currentUser =  usersDao.getOne(1L);
-        Ad newAd = new Ad("XBOX X","brand new", currentUser);
+        Ad newAd = new Ad("XBOX X","brand new", currentUser, null);
         adsDao.save(newAd);
         return "create a new ad";
     }
@@ -73,12 +73,12 @@ public class AdsController {
     @ResponseBody
     public String update(@PathVariable long id,
                          @RequestParam(name = "title") String title,
-                         @RequestParam(name = "description") String desc){
+                         @RequestParam(name = "description") String description){
         // find an ad
         Ad foundAd = adsDao.getOne(id); // select * from ads where id = ?
         // edit the ad
         foundAd.setTitle(title);
-        foundAd.setDescription(desc);
+        foundAd.setDescription(description);
         // save the changes
         adsDao.save(foundAd); // update ads set title = ? where id = ?
         return "ad updated";

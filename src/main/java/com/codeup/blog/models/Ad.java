@@ -1,6 +1,7 @@
 package com.codeup.blog.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 //Table is a representation of many ads
@@ -18,30 +19,27 @@ public class Ad {
     @Column(nullable = false)
     private String description;
 
-
-
-
     @OneToOne
     private User owner;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ad")
+    private List<AdImage> images;
 
-    //Spring Framework uses this empty constructor
-    public Ad() {
-    }
-
-    //insert Ad
-    public Ad(String title, String description, User user) {
+    //Create AdImages [without id]
+    public Ad(String title, String description, User owner, List<AdImage> images) {
         this.title = title;
         this.description = description;
-        this.owner = user;
+        this.owner = owner;
+        this.images = images;
     }
 
-    //read Ad
-    public Ad(long id, String title, String description, User user) {
+    //Read AdImages [with id]
+    public Ad(long id, String title, String description, User owner, List<AdImage> images) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.owner = user;
+        this.owner = owner;
+        this.images = images;
     }
 
     public String getTitle() {
@@ -75,4 +73,13 @@ public class Ad {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+    public List<AdImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<AdImage> images) {
+        this.images = images;
+    }
+
 }
