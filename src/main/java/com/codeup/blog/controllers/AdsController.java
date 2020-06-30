@@ -46,20 +46,28 @@ public class AdsController {
     }
 
     @GetMapping("/ads/create")
-    @ResponseBody
-    public String showForm(){
-        return "view the form for creating an ad";
+    public String showForm(Model viewModel){
+        viewModel.addAttribute("ad", new Ad());
+        return "/ads/create";
     }
 
+
     @PostMapping("/ads/create")
-    @ResponseBody
-    public String save()
-    {
-        User currentUser =  usersDao.getOne(1L);
-        Ad newAd = new Ad("XBOX X","brand new", currentUser, null);
-        adsDao.save(newAd);
-        return "create a new ad";
+    public String save(@ModelAttribute Ad adToBeSaved) {
+        User currentUser = usersDao.getOne(1L);
+        adToBeSaved.setOwner(currentUser);
+        Ad savedAd = adsDao.save(adToBeSaved);
+        return "redirect:/ads/" + savedAd.getId();
     }
+//    @PostMapping("/ads/create")
+//    @ResponseBody
+//    public String save()
+//    {
+//        User currentUser =  usersDao.getOne(1L);
+//        Ad newAd = new Ad("XBOX X","brand new", currentUser, null);
+//        adsDao.save(newAd);
+//        return "/ads/create";
+//    }
 
     @GetMapping("/ads/{id}/edit")
     public String showEditForm(Model model, @PathVariable long id){
@@ -70,18 +78,13 @@ public class AdsController {
     }
 
     @PostMapping("/ads/{id}/edit")
-    @ResponseBody
-    public String update(@PathVariable long id,
-                         @RequestParam(name = "title") String title,
-                         @RequestParam(name = "description") String description){
+    public String update(@ModelAttribute Ad adUpdated){
         // find an ad
-        Ad foundAd = adsDao.getOne(id); // select * from ads where id = ?
-        // edit the ad
-        foundAd.setTitle(title);
-        foundAd.setDescription(description);
         // save the changes
-        adsDao.save(foundAd); // update ads set title = ? where id = ?
-        return "ad updated";
+        User currentUser = usersDao.getOne(1L);
+        adUpdated.setOwner(currentUser);
+        adsDao.save(adUpdated); // update ads set title = ? where id = ?
+        return "redirect:/ads/" + adUpdated.getId();
     }
 
     @PostMapping("/ads/{id}/delete")

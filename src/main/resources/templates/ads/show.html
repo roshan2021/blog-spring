@@ -5,20 +5,20 @@
     <title>View Ad</title>
 </head>
 <body>
-<nav th:replace="fragments/navbar :: navbar"></nav>
-<div class="container">
-    <div th:if="${ad == null}">
-        Ad not found.
-    </div>
-    <div th:if="${ad}">
-        <div th:text="${adId}">ID</div>
-        <h3 th:text="${ad.title}">Title</h3>
-        <div th:text="${ad.description}">Description</div>
-        <div>Created by <span th:text="${ad.owner.username}"></span></div>
-        <div th:each="image: ${ad.images}">
-            <img th:src="${image.path}" th:alt="${image.description}">
+    <nav th:replace="fragments/navbar :: navbar"></nav>
+    <div class="container">
+        <div th:if="${ad == null}">
+            Ad not found.
+        </div>
+        <div th:if="${ad}">
+            <div th:text="${adId}">ID</div>
+            <h3 th:text="${ad.title}">Title</h3>
+            <div th:text="${ad.description}">Description</div>
+            <div>Created by <span th:text="${ad.owner.username}"></span></div>
+            <div th:each="image: ${ad.images}">
+                <img th:src="${image.path}" th:alt="${image.description}">
+            </div>
         </div>
     </div>
-</div>
 </body>
 </html>
