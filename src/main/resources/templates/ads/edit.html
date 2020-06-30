@@ -17,7 +17,7 @@
         <!--SETTERS-->
         <input th:field="*{description}" />
         <br />
-        <input type="submit" />
+        <button>Save changes</button>
     </form>
 
     <form th:action="${'/ads/' + ad.id + '/delete'}" method="post">

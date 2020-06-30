@@ -78,13 +78,12 @@ public class AdsController {
     }
 
     @PostMapping("/ads/{id}/edit")
-    public String update(@ModelAttribute Ad adUpdated){
-        // find an ad
+    public String update(@ModelAttribute Ad adEdit){
         // save the changes
         User currentUser = usersDao.getOne(1L);
-        adUpdated.setOwner(currentUser);
-        adsDao.save(adUpdated); // update ads set title = ? where id = ?
-        return "redirect:/ads/" + adUpdated.getId();
+        adEdit.setOwner(currentUser);
+        adsDao.save(adEdit); // update ads set title = ? where id = ?
+        return "redirect:/ads/" + adEdit.getId();
     }
 
     @PostMapping("/ads/{id}/delete")
