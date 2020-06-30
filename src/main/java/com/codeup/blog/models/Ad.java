@@ -25,6 +25,9 @@ public class Ad {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ad")
     private List<AdImage> images;
 
+    // spring framework uses this empty constructor
+    public Ad() {}
+
     //Create AdImages [without id]
     public Ad(String title, String description, User owner, List<AdImage> images) {
         this.title = title;
