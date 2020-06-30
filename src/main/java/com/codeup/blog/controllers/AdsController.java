@@ -1,7 +1,9 @@
 package com.codeup.blog.controllers;
 
 import com.codeup.blog.daos.AdsRepository;
+import com.codeup.blog.daos.UsersRepository;
 import com.codeup.blog.models.Ad;
+import com.codeup.blog.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +17,11 @@ public class AdsController {
 
     // dependency injection
     private AdsRepository adsDao;
-    public AdsController(AdsRepository adsRepository){
+    private UsersRepository usersDao;
+    public AdsController(AdsRepository adsRepository, UsersRepository usersRepository){
         adsDao = adsRepository;
+        usersDao = usersRepository;
+
     }
 
     @GetMapping("/ads")
@@ -34,8 +39,9 @@ public class AdsController {
 
     @GetMapping("/ads/{id}")
     public String show(@PathVariable long id, Model model){
+        Ad ad = adsDao.getOne(id);
         model.addAttribute("adId", id);
-        model.addAttribute("ad", new Ad("PS1", "Used", null));
+        model.addAttribute("ad", ad);
         return "/ads/show";
     }
 
@@ -49,7 +55,8 @@ public class AdsController {
     @ResponseBody
     public String save()
     {
-        Ad newAd = new Ad("XBOX X","brand new", null);
+        User currentUser =  usersDao.getOne(1L);
+        Ad newAd = new Ad("XBOX X","brand new", currentUser);
         adsDao.save(newAd);
         return "create a new ad";
     }
