@@ -91,10 +91,9 @@ public class AdsController {
     }
 
     @PostMapping("/ads/{id}/delete")
-    @ResponseBody
     public String destroy(@PathVariable long id){
         adsDao.deleteById(id);
-        return "ad deleted";
+        return "redirect:/ads";
     }
 
     @GetMapping("/search")
