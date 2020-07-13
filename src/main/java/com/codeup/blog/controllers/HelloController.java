@@ -24,11 +24,13 @@ public class HelloController {
         return "hello";
     }
 
+    //GET JOIN FORM
     @GetMapping("/join")
     public String showJoinForm() {
         return "join";
     }
 
+    //SUBMIT FORM FOR POST METHOD
     @PostMapping("/join")
     public String joinCohort(@RequestParam String cohort, Model model) {
         model.addAttribute("cohort", cohort);

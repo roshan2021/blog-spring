@@ -20,12 +20,12 @@ public class AdsController {
     // dependency injection
     private AdsRepository adsDao;
     private UsersRepository usersDao;
-    private final EmailService emailService;
+//    private final EmailService emailService;
 
     public AdsController(AdsRepository adsRepository, UsersRepository usersRepository, EmailService emailService){
         this.adsDao = adsRepository;
         this.usersDao = usersRepository;
-        this.emailService = emailService;
+//        this.emailService = emailService;
 
     }
 
@@ -43,13 +43,13 @@ public class AdsController {
         Ad ad = adsDao.getOne(id);
         model.addAttribute("adId", id);
         model.addAttribute("ad", ad);
-        return "/ads/show";
+        return "ads/show";
     }
 
     @GetMapping("/ads/create")
     public String showForm(Model viewModel){
         viewModel.addAttribute("ad", new Ad());
-        return "/ads/create";
+        return "ads/create";
     }
 
 
@@ -58,7 +58,7 @@ public class AdsController {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         adToBeSaved.setOwner(currentUser);
         Ad savedAd = adsDao.save(adToBeSaved);
-        emailService.prepareAndSend(savedAd, "A new ad has been created", "An ad has been created with the id of " + savedAd.getId());
+//        emailService.prepareAndSend(savedAd, "A new ad has been created", "An ad has been created with the id of " + savedAd.getId());
         return "redirect:/ads/" + savedAd.getId();
     }
 
